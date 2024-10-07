@@ -65,7 +65,7 @@ function unrenderSnake() {
   gameBoard.removeChild(snakeBody);
 }
 
-function moveSnakeUp() {
+function moveSnake() {
   if (gameIsActive) {
     snakeDirection = "up";
     const movingSnake = { x: snakePosition[0].x, y: snakePosition[0].y - 1 };
@@ -78,29 +78,18 @@ function moveSnakeUp() {
   }
 }
 
-function moveSnakeLeft() {
-  if (gameIsActive) {
-    snakeDirection = "left";
-    const movingSnake = { x: snakePosition[0].x - 1, y: snakePosition[0].y };
-    snakePosition.unshift(movingSnake);
-    snakePosition.pop();
-    unrenderSnake();
-    renderSnake();
-    checkLoseConditions();
-    changeDirection();
-  }
+function moveSnakeleft(){
+    if (gameIsActive){
+        const movingSnake = {x: snakePosition[0].x-1, y: snakePosition[0].y};
+        snakePosition.unshift(movingSnake);
+        snakePosition.pop();
+        unrenderSnake();
+        renderSnake();
+        checkLoseConditions();
+    }
 }
 
-function changeDirection() {
-  clearInterval(movementInterval);
-  if (snakeDirection === "up") {
-    movementInterval = setInterval(moveSnakeUp, 500);
-  } else if (snakeDirection === "left") {
-    movementInterval = setInterval(moveSnakeLeft, 500);
-  }
-}
-
-// setInterval(moveSnakeUp, 100);
+// setInterval(moveSnakeUp, 100); 
 
 function checkLoseConditions() {
   if (snakePosition[0].x === 0 || snakePosition[0].y === 0) {
@@ -127,16 +116,16 @@ restartButton.addEventListener("click", restartGame);
 // Movement Arrow Key
 window.addEventListener("keydown", function (event) {
   if (event.key === "ArrowUp") {
-    moveSnakeUp();
+    moveSnake();
     // unrenderSnake();
     // renderSnake();
   }
-});
+})
 
 window.addEventListener("keydown", function (event) {
-  if (event.key === "ArrowLeft") {
-    moveSnakeLeft();
-    // unrenderSnake();
-    // renderSnake();
-  }
-});
+    if (event.key === "ArrowLeft") {
+      moveSnakeleft();
+      // unrenderSnake();
+      // renderSnake();
+    }
+})
