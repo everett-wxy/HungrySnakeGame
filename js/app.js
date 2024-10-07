@@ -8,7 +8,7 @@ let snakePosition = [{ x: 10, y: 10 }];
 
 let gameIsActive = "";
 let snakeDirection;
-let movementInterval;
+let directionInterval;
 
 /*----- Cached Element References  -----*/
 
@@ -65,35 +65,41 @@ function unrenderSnake() {
   gameBoard.removeChild(snakeBody);
 }
 
-function moveSnake() {
-  if (gameIsActive) {
-    snakeDirection = "up";
-    const movingSnake = { x: snakePosition[0].x, y: snakePosition[0].y - 1 };
-    snakePosition.unshift(movingSnake);
-    snakePosition.pop();
-    unrenderSnake();
-    renderSnake();
-    checkLoseConditions();
-    changeDirection();
-  }
-}
-
-function moveSnakeleft(){
+function moveSnake(){
+    let movingSnake;
     if (gameIsActive){
-        const movingSnake = {x: snakePosition[0].x-1, y: snakePosition[0].y};
+        switch(snakeDirection) {
+            case "up":
+                movingSnake = { x: snakePosition[0].x, y: snakePosition[0].y - 1 };
+                break;
+            case "right":
+                movingSnake = { x: snakePosition[0].x + 1, y: snakePosition[0].y };
+                break;
+            case "down":
+                movingSnake = { x: snakePosition[0].x , y: snakePosition[0].y + 1 };
+                break;
+            case "left":
+                movingSnake = { x: snakePosition[0].x - 1, y: snakePosition[0].y };
+                break;
+        };
         snakePosition.unshift(movingSnake);
         snakePosition.pop();
         unrenderSnake();
         renderSnake();
         checkLoseConditions();
+        changeDirection();
     }
 }
 
-// setInterval(moveSnakeUp, 100); 
+function changeDirection(){
+    clearInterval(directionInterval);
+    directionInterval = setInterval(moveSnake,100);
+}
 
 function checkLoseConditions() {
   if (snakePosition[0].x === 0 || snakePosition[0].y === 0) {
     gameMessage.innerText = `You Lose`;
+    unrenderSnake();
     gameIsActive = false;
     showRestartButton();
   }
@@ -113,19 +119,21 @@ function restartGame() {
 startButton.addEventListener("click", startGame);
 restartButton.addEventListener("click", restartGame);
 
-// Movement Arrow Key
-window.addEventListener("keydown", function (event) {
-  if (event.key === "ArrowUp") {
+window.addEventListener("keydown", function (event){
+    event.preventDefault();
+    switch(event.key){
+        case "ArrowUp":
+            snakeDirection = 'up';
+            break;
+        case "ArrowLeft":
+            snakeDirection = 'left'
+            break;
+        case "ArrowDown":
+            snakeDirection = 'down'
+            break;
+        case "ArrowRight":
+            snakeDirection = 'right'
+            break;
+    };
     moveSnake();
-    // unrenderSnake();
-    // renderSnake();
-  }
-})
-
-window.addEventListener("keydown", function (event) {
-    if (event.key === "ArrowLeft") {
-      moveSnakeleft();
-      // unrenderSnake();
-      // renderSnake();
-    }
 })
