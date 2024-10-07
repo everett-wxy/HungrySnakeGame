@@ -88,6 +88,7 @@ function moveSnake(){
         renderSnake();
         checkLoseConditions();
         changeDirection();
+        console.log(snakePosition);
     }
 }
 
@@ -97,7 +98,7 @@ function changeDirection(){
 }
 
 function checkLoseConditions() {
-  if (snakePosition[0].x === 0 || snakePosition[0].y === 0) {
+  if (snakePosition[0].x === 0 || snakePosition[0].y === 0 || snakePosition[0].x === 21 || snakePosition[0].y === 21 ) {
     gameMessage.innerText = `You Lose`;
     unrenderSnake();
     gameIsActive = false;
@@ -110,8 +111,9 @@ function showRestartButton() {
 }
 
 function restartGame() {
-  unrenderSnake();
+//   unrenderSnake();
   snakePosition = [{ x: 10, y: 10 }];
+  snakeDirection = 'up';
   gameMessage.innerText = `Press Start to Play`;
 }
 /*----------- Event Listeners ----------*/
