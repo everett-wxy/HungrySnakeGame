@@ -63,7 +63,7 @@ function unrenderSnake() {
   gameBoard.removeChild(snakeBody);
 }
 
-function moveSnake() {
+function moveSnakeUp() {
   if (gameIsActive) {
     const movingSnake = { x: snakePosition[0].x, y: snakePosition[0].y - 1 };
     snakePosition.unshift(movingSnake);
@@ -75,7 +75,18 @@ function moveSnake() {
   }
 }
 
-setInterval(moveSnake, 100); // call moveSnakes every .5 second
+function moveSnakeleft(){
+    if (gameIsActive){
+        const movingSnake = {x: snakePosition[0].x-1, y: snakePosition[0].y};
+        snakePosition.unshift(movingSnake);
+        snakePosition.pop();
+        unrenderSnake();
+        renderSnake();
+        checkLoseConditions();
+    }
+}
+
+// setInterval(moveSnakeUp, 100); 
 
 function checkLoseConditions() {
   if (snakePosition[0].x === 0 || snakePosition[0].y === 0) {
@@ -102,8 +113,16 @@ restartButton.addEventListener("click", restartGame);
 // Movement Arrow Key
 window.addEventListener("keydown", function (event) {
   if (event.key === "ArrowUp") {
-    moveSnake();
+    moveSnakeUp();
     // unrenderSnake();
     // renderSnake();
   }
-});
+})
+
+window.addEventListener("keydown", function (event) {
+    if (event.key === "ArrowLeft") {
+      moveSnakeleft();
+      // unrenderSnake();
+      // renderSnake();
+    }
+})
