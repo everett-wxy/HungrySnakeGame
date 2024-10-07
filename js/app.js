@@ -15,7 +15,7 @@ const snake = document.querySelector(".snake");
 const startButton = document.getElementById("start-button");
 const restartButton = document.getElementById("restart-button");
 const gameMessage = document.getElementById("game-message");
- 
+
 /*-------------- Functions -------------*/
 
 //create grid cells
@@ -29,26 +29,24 @@ const gameMessage = document.getElementById("game-message");
     */
 
 function startGame() {
-  renderSnake();
-  gameIsActive = true;
   countDown();
+  renderSnake();
 }
 
-function countDown(){
-    let timeLeft = 3; 
+function countDown() {
+  let timeLeft = 3;
+  gameMessage.innerText = timeLeft;
+  let countdownInterval = setInterval(() => {
+    timeLeft -= 1;
     gameMessage.innerText = timeLeft;
-    let countdownInterval = setInterval(()=>{
-        timeLeft -= 1;
-        gameMessage.innerText = timeLeft;
-        
-        if (timeLeft <= 0){
-            clearInterval(countdownInterval); 
-            gameMessage.innerText = 'Enjoy the game!';
-        }
-    }, 1000);
-}
 
-countDown();
+    if (timeLeft <= 0) {
+      clearInterval(countdownInterval);
+      gameMessage.innerText = "Enjoy the game!";
+      gameIsActive = true;
+    }
+  }, 1000);
+}
 
 function renderSnake() {
   // Creating snakeBody
@@ -77,30 +75,29 @@ function moveSnake() {
   }
 }
 
-setInterval(moveSnake,100); // call moveSnakes every .5 second
+setInterval(moveSnake, 100); // call moveSnakes every .5 second
 
-function checkLoseConditions(){
-    if (snakePosition[0].x === 0 || snakePosition[0].y === 0){
-        gameMessage.innerText = `You Lose`;
-        gameIsActive = false; 
-        showRestartButton();
-    }
+function checkLoseConditions() {
+  if (snakePosition[0].x === 0 || snakePosition[0].y === 0) {
+    gameMessage.innerText = `You Lose`;
+    gameIsActive = false;
+    showRestartButton();
+  }
 }
 
-function showRestartButton(){
-    restartButton.style.display = 'block';
+function showRestartButton() {
+  restartButton.style.display = "block";
 }
 
-function restartGame(){
-    unrenderSnake();
-    snakePosition = [{ x: 10, y: 10 }];
-    gameMessage.innerText = `Press Start to Play`
+function restartGame() {
+  unrenderSnake();
+  snakePosition = [{ x: 10, y: 10 }];
+  gameMessage.innerText = `Press Start to Play`;
 }
 /*----------- Event Listeners ----------*/
 
-
 startButton.addEventListener("click", startGame);
-restartButton.addEventListener('click', restartGame);
+restartButton.addEventListener("click", restartGame);
 
 // Movement Arrow Key
 window.addEventListener("keydown", function (event) {
