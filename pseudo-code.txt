@@ -1,47 +1,37 @@
-Primary objective of program: Execute a snake game program for user to play 
+// Initialise  game variables 
+    - currentScore 
+    - isGameActive (yes, no)
+    - snakeLength
+
+// Cache elements in variable that needs to be accessed frequently
+
+// Add event listeners to HTML element that expects interactions
+
+// Create Function 
 
 
-1. Initialize start state by loading URL
-    1. create variable for
-        1. home screen menu state
-        2. instruction state
-        3. settings state
-        4. start state
-        5. difficulty 
-        6. username 
-        7. score
-        8. timer 
-    2. display menu
-        1. home screen menu is true 
-        2. show options for “instructions”, “settings”, and “start” 
-2. handle menu selection 
-    1. change state according to request:
-        1. if “instruction” is selected, display instructions 
-        2. if “settings” is selected, display settings
-        3. if “start” is selected, transition to game screen and display count down
-3. if select instruction, instruction state is true 
-    1. clear screen 
-    2. display details on how to play
-        1. how to control meerca
-        2. objectives ( collecting meerca while avoiding bomb, collision with the wall or with own body) 
-        3. how scoring is calculated
-        4. display ‘press any button to return to screen’
-4. if select settings, setting state is true 
-    1. clear screen
-    2. display settings 
-        1. difficulty
-        2. username 
-    3. if user change setting, update setting accordingly 
-    4. display ‘press any button to return to screen’
-5. is Game start is selected, game state is true
-    1. clear screen
-    2. display count down timer from 3..2..1 
-    3. initialise game elements 
-        1. set up board, snake, fruits
-    4. handle user input
-    5. check for collision 
-    6. game over screen
-        1. Display final score
-        2. Provide options:
-            - "Replay"
-            - "Back to Menu"
+-- What does the program needs to do -- 
+-- How is the program going to execute its function -- 
+
+
+// Display game with start button
+
+// Start game when user clicks start
+    
+    // initialise snakePosition
+    // Count down 3..2..1
+        // when user click start (trigger)
+        // count down 3..2..1 
+        // display on screen 
+    // snake starts moving in UP direction
+
+// every 5 seconds
+    // snake body increase by 1 
+    
+// If snake collide with wall or body
+    // game ends 
+    // display score
+    // show reset button
+
+// Reset game
+    // restart game state 

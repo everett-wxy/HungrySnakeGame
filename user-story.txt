@@ -1,11 +1,21 @@
-1. As a user, I want the Meerca Chase game interface to be displayed so that I can begin interacting with the game.
-2. As a user, I want to access the instructions, change settings, or start the game so that I can customise, or understand the game before playing. 
-3. As a user, I want the interface to change based on the option I select (instructions, settings or start the game) so that I can navigate the game. 
-4. As a user, when I select the option to read the instructions, I want to be presented with clear instructions so that I can understand how to play the game. 
-5. As a user, when I select the option to customise the settings, I want to be presented with the various settings that I can change os I can tailor the game to my preferences.
-6. As a user, when I select to play the game, I want to see a countdown timer so that I have time to prepare playing the game.
-7. As a user, when the game starts, I want to be able to control the move of the Meerca using the keyboard so that I can direct the character in the game. 
-8. As a user, during the game, I want fruits to appear on the screen and for new fruits to spawn when I capture one so that I can continue playing the game.
-(stretch) 9. As a user, during the game, I want to clearly see the bombs on the screen and for more bombs to appear over time to increase difficulty.  
-(stretch) 10. As a user, I want to see a timer displaying how long I have survived and my current score so that I can track my progress and performance during the game.
-11. As a user, once I lose the game, I want to see my final score and be presented with options to replay or return to the home menu so that I can adjust the settings, read the instructions and resume playing.
+MVP: 
+    1. As a user, I want the Meerca Chase game interface with a start button be displayed
+    2. As a user, I want to control the movement of the game character with my arrow keys
+    3. As a user, I want the game to end if my game character collides with its body or the wall 
+    4. As a user, I want the body of the game character to grow longer as I continue playing to increase difficulty
+    5. As a user, I want to see my score increases as I play the game 
+    6. As a user, I want to see a lose-screen that display my results and a button to replay 
+
+
+Stretch: 
+    1. As a user, I want the Meerca Chase game interface to be displayed so that I can begin interacting with the game.
+    2. As a user, I want to access the instructions, change settings, or start the game so that I can customise, or understand the game before playing. 
+    3. As a user, I want the interface to change based on the option I select (instructions, settings or start the game) so that I can navigate the game. 
+    4. As a user, when I select the option to read the instructions, I want to be presented with clear instructions so that I can understand how to play the game. 
+    5. As a user, when I select the option to customise the settings, I want to be presented with the various settings that I can change os I can tailor the game to my preferences.
+    6. As a user, when I select to play the game, I want to see a countdown timer so that I have time to prepare playing the game.
+    7. As a user, when the game starts, I want to be able to control the move of the Meerca using the keyboard so that I can direct the character in the game. 
+    8. As a user, during the game, I want fruits to appear on the screen and for new fruits to spawn when I capture one so that I can continue playing the game.
+    9. As a user, during the game, I want to clearly see the bombs on the screen and for more bombs to appear over time to increase difficulty.  
+    10. As a user, I want to see a timer displaying how long I have survived and my current score so that I can track my progress and performance during the game.
+    11. As a user, once I lose the game, I want to see my final score and be presented with options to replay or return to the home menu so that I can adjust the settings, read the instructions and resume playing.
