@@ -9,10 +9,8 @@
 
 // Create Function 
 
-
 -- What does the program needs to do -- 
 -- How is the program going to execute its function -- 
-
 
 // Display game with start button
 
@@ -25,8 +23,16 @@
         // display on screen 
     // snake starts moving in UP direction
 
-// every 5 seconds
-    // snake body increase by 1 
+// change direction
+    change snake direction based on arrow key
+
+// spawn of fruits
+    // new fruits spawning in random places 
+        // randomly generate an x and y coordinate
+        // create a fruit element at that coordinate
+
+// snake body lengthen when it absorbs fruits
+    snake body increase in length by one when it absorbs fruits
     
 // If snake collide with wall or body
     // game ends 

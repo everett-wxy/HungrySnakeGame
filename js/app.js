@@ -3,6 +3,7 @@ const gridHeight = 20;
 const gridWidth = 20;
 const gridSize = gridHeight * gridWidth;
 let snakePosition = [{ x: 10, y: 10 }];
+let fruitPosition = {} ;
 
 /*---------- Variables (state) ---------*/
 
@@ -50,6 +51,22 @@ function countDown() {
   }, 1000);
 }
 
+function RandomCoordinate(min = 2, max = 20) {
+  return Math.floor(Math.random() * (max - min) + min);
+}
+
+function generateFruits() {
+    fruitPosition.x = RandomCoordinate();
+    fruitPosition.y = RandomCoordinate();
+    const fruitElement = document.createElement('div');
+    fruitElement.classList.add('fruit');
+    fruitElement.style.gridColumnStart = fruitPosition.x;
+    fruitElement.style.gridRowStart = fruitPosition.y;
+    gameBoard.appendChild(fruitElement);
+}
+
+generateFruits();
+
 function renderSnake() {
   // Creating snakeBody
   const snakeBody = document.createElement("div");
@@ -65,40 +82,45 @@ function unrenderSnake() {
   gameBoard.removeChild(snakeBody);
 }
 
-function moveSnake(){
-    let movingSnake;
-    if (gameIsActive){
-        switch(snakeDirection) {
-            case "up":
-                movingSnake = { x: snakePosition[0].x, y: snakePosition[0].y - 1 };
-                break;
-            case "right":
-                movingSnake = { x: snakePosition[0].x + 1, y: snakePosition[0].y };
-                break;
-            case "down":
-                movingSnake = { x: snakePosition[0].x , y: snakePosition[0].y + 1 };
-                break;
-            case "left":
-                movingSnake = { x: snakePosition[0].x - 1, y: snakePosition[0].y };
-                break;
-        };
-        snakePosition.unshift(movingSnake);
-        snakePosition.pop();
-        unrenderSnake();
-        renderSnake();
-        checkLoseConditions();
-        changeDirection();
-        console.log(snakePosition);
+function moveSnake() {
+  let movingSnake;
+  if (gameIsActive) {
+    switch (snakeDirection) {
+      case "up":
+        movingSnake = { x: snakePosition[0].x, y: snakePosition[0].y - 1 };
+        break;
+      case "right":
+        movingSnake = { x: snakePosition[0].x + 1, y: snakePosition[0].y };
+        break;
+      case "down":
+        movingSnake = { x: snakePosition[0].x, y: snakePosition[0].y + 1 };
+        break;
+      case "left":
+        movingSnake = { x: snakePosition[0].x - 1, y: snakePosition[0].y };
+        break;
     }
+    snakePosition.unshift(movingSnake);
+    snakePosition.pop();
+    unrenderSnake();
+    renderSnake();
+    checkLoseConditions();
+    movementInterval();
+    console.log(snakePosition);
+  }
 }
 
-function changeDirection(){
-    clearInterval(directionInterval);
-    directionInterval = setInterval(moveSnake,100);
+function movementInterval() {
+  clearInterval(directionInterval);
+  directionInterval = setInterval(moveSnake, 100);
 }
 
 function checkLoseConditions() {
-  if (snakePosition[0].x === 0 || snakePosition[0].y === 0 || snakePosition[0].x === 21 || snakePosition[0].y === 21 ) {
+  if (
+    snakePosition[0].x === 0 ||
+    snakePosition[0].y === 0 ||
+    snakePosition[0].x === 21 ||
+    snakePosition[0].y === 21
+  ) {
     gameMessage.innerText = `You Lose`;
     unrenderSnake();
     gameIsActive = false;
@@ -111,9 +133,9 @@ function showRestartButton() {
 }
 
 function restartGame() {
-//   unrenderSnake();
+  //   unrenderSnake();
   snakePosition = [{ x: 10, y: 10 }];
-  snakeDirection = 'up';
+  snakeDirection = "up";
   gameMessage.innerText = `Press Start to Play`;
 }
 /*----------- Event Listeners ----------*/
@@ -121,21 +143,21 @@ function restartGame() {
 startButton.addEventListener("click", startGame);
 restartButton.addEventListener("click", restartGame);
 
-window.addEventListener("keydown", function (event){
-    event.preventDefault();
-    switch(event.key){
-        case "ArrowUp":
-            snakeDirection = 'up';
-            break;
-        case "ArrowLeft":
-            snakeDirection = 'left'
-            break;
-        case "ArrowDown":
-            snakeDirection = 'down'
-            break;
-        case "ArrowRight":
-            snakeDirection = 'right'
-            break;
-    };
-    moveSnake();
-})
+window.addEventListener("keydown", function (event) {
+  event.preventDefault();
+  switch (event.key) {
+    case "ArrowUp":
+      snakeDirection = "up";
+      break;
+    case "ArrowLeft":
+      snakeDirection = "left";
+      break;
+    case "ArrowDown":
+      snakeDirection = "down";
+      break;
+    case "ArrowRight":
+      snakeDirection = "right";
+      break;
+  }
+  moveSnake();
+});
