@@ -2,14 +2,16 @@
 const gridHeight = 20;
 const gridWidth = 20;
 const gridSize = gridHeight * gridWidth;
-let snakePosition = [{ x: 10, y: 10 }];
-let fruitPosition = {} ;
+
 
 /*---------- Variables (state) ---------*/
 
 let gameIsActive = "";
-let snakeDirection;
+let snakePosition = [{ x: 10, y: 10 }];
+let fruitPosition = {} ;
 let directionInterval;
+let snakeDirection;
+
 
 /*----- Cached Element References  -----*/
 
@@ -34,6 +36,7 @@ const gameMessage = document.getElementById("game-message");
 function startGame() {
   countDown();
   renderSnake();
+  generateFruits();
 }
 
 function countDown() {
@@ -64,8 +67,6 @@ function generateFruits() {
     fruitElement.style.gridRowStart = fruitPosition.y;
     gameBoard.appendChild(fruitElement);
 }
-
-generateFruits();
 
 function renderSnake() {
   // Creating snakeBody
@@ -133,7 +134,7 @@ function showRestartButton() {
 }
 
 function restartGame() {
-  //   unrenderSnake();
+  gameBoard.innerHTML=""; 
   snakePosition = [{ x: 10, y: 10 }];
   snakeDirection = "up";
   gameMessage.innerText = `Press Start to Play`;
@@ -145,19 +146,21 @@ restartButton.addEventListener("click", restartGame);
 
 window.addEventListener("keydown", function (event) {
   event.preventDefault();
-  switch (event.key) {
-    case "ArrowUp":
-      snakeDirection = "up";
-      break;
-    case "ArrowLeft":
-      snakeDirection = "left";
-      break;
-    case "ArrowDown":
-      snakeDirection = "down";
-      break;
-    case "ArrowRight":
-      snakeDirection = "right";
-      break;
+  if (event.key === "ArrowUp" && snakeDirection !== "down" || event.key === "ArrowDown" && snakeDirection !== "up" || event.key === "ArrowLeft" && snakeDirection !== "right" || event.key === "ArrowRight" && snakeDirection !== "left"){
+    switch (event.key) {
+        case "ArrowUp":
+        snakeDirection = "up";
+        break;
+        case "ArrowLeft":
+        snakeDirection = "left";
+        break;
+        case "ArrowDown":
+        snakeDirection = "down";
+        break;
+        case "ArrowRight":
+        snakeDirection = "right";
+        break;
+    }
   }
   moveSnake();
 });
