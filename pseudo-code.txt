@@ -37,7 +37,7 @@
     
 // If snake collide with wall or body
     // game ends 
-                                    // code in clash with body function 
+    // code in clash with body function 
     // display score
     // show reset button
 

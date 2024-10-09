@@ -11,6 +11,8 @@ let fruitPosition = {};
 let directionInterval;
 let snakeDirection;
 let ifCollideBody = false;
+let speed = 100;
+let score = 0;
 
 /*----- Cached Element References  -----*/
 
@@ -19,6 +21,7 @@ const snake = document.querySelector(".snake");
 const startButton = document.getElementById("start-button");
 const restartButton = document.getElementById("restart-button");
 const gameMessage = document.getElementById("game-message");
+const scoreEl = document.getElementById("score");
 
 /*-------------- Functions -------------*/
 
@@ -27,6 +30,9 @@ function startGame() {
   countDown();
   renderSnakeHead();
   generateFruits();
+  snakeDirection = "up";
+  movementInterval();
+  score = 0;
 }
 
 function countDown() {
@@ -41,7 +47,7 @@ function countDown() {
       gameMessage.innerText = "Enjoy the game!";
       gameIsActive = true;
     }
-  }, 100);
+  }, 500);
 }
 
 function renderSnakeHead() {
@@ -109,7 +115,7 @@ function moveSnake() {
 
 function movementInterval() {
   clearInterval(directionInterval);
-  directionInterval = setInterval(moveSnake, 200);
+  directionInterval = setInterval(moveSnake, speed);
 }
 
 function eatFruit() {
@@ -121,6 +127,8 @@ function eatFruit() {
     fruitElement.remove();
     generateFruits();
     growBody();
+    score++;
+    updateScore();
   }
 }
 
@@ -175,34 +183,41 @@ function growBody() {
   gameBoard.appendChild(snakeGrow);
 }
 
+function updateScore() {
+  scoreEl.innerText = score;
+}
+
 function checkLoseConditions() {
-    checkBodyCollision();
+  checkBodyCollision();
   if (
     snakePosition[0].x === 0 ||
     snakePosition[0].y === 0 ||
     snakePosition[0].x === 21 ||
     snakePosition[0].y === 21 ||
-    ifCollideBody 
+    ifCollideBody
   ) {
     gameMessage.innerText = `You Lose`;
     // unrenderSnakeTail();
     gameIsActive = false;
     showRestartButton();
     clearInterval(directionInterval);
+    startButton.style.display = "none";
   }
 }
 
 // if the head of snake comes into contact with any coordinates of the body
 
 function checkBodyCollision() {
-  let head = {x:snakePosition[0].x, y:snakePosition[0].y};
+  let head = { x: snakePosition[0].x, y: snakePosition[0].y };
 
   for (i = 1; i < snakePosition.length; i++) {
-    if (ifCollideBody = (head.x === snakePosition[i].x && head.y === snakePosition[i].y)){
-        return;
-    };
+    if (
+      (ifCollideBody =
+        head.x === snakePosition[i].x && head.y === snakePosition[i].y)
+    ) {
+      return;
+    }
   }
-
 }
 
 function showRestartButton() {
@@ -213,7 +228,10 @@ function restartGame() {
   gameBoard.innerHTML = "";
   snakePosition = [{ x: 10, y: 10 }];
   snakeDirection = "up";
+  ifCollideBody = false;
   gameMessage.innerText = `Press Start to Play`;
+  startButton.style.display = "block";
+  restartButton.style.display = "none";
 }
 /*----------- Event Listeners ----------*/
 
