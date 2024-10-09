@@ -28,13 +28,12 @@
 
 // spawn of fruits
     // new fruits spawning in random places 
-                                    // fruit should not spawn in snake coordinate 
+        // fruit should not spawn in snake coordinate 
         // randomly generate an x and y coordinate
         // create a fruit element at that coordinate
 
 // snake body lengthen when it absorbs fruits
     snake body increase in length by one when it absorbs fruits
-                                // FIX position of new snake segment (it should simply replace the last element of snakePosition array )
     
 // If snake collide with wall or body
     // game ends 

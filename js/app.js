@@ -63,6 +63,11 @@ function RandomCoordinate(min = 2, max = 20) {
 
 function generateFruits() {
   fruitPosition = { x: RandomCoordinate(), y: RandomCoordinate() };
+
+  while (snakePosition.some((i) => i.x === fruitPosition.x && i.y === fruitPosition.y)) {
+    fruitPosition = { x: RandomCoordinate(), y: RandomCoordinate() };
+  };
+  
   const fruitElement = document.createElement("div");
   fruitElement.classList.add("fruit");
   fruitElement.style.gridColumnStart = fruitPosition.x;
@@ -173,9 +178,10 @@ function checkLoseConditions() {
     snakePosition[0].y === 21
   ) {
     gameMessage.innerText = `You Lose`;
-    unrenderSnakeTail();
+    // unrenderSnakeTail();
     gameIsActive = false;
     showRestartButton();
+    clearInterval(directionInterval);
   }
 }
 
