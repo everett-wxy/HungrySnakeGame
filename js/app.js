@@ -10,6 +10,7 @@ let snakePosition = [{ x: undefined, y: undefined }];
 let fruitPosition = {};
 let directionInterval;
 let snakeDirection;
+let ifCollideBody = false;
 
 /*----- Cached Element References  -----*/
 
@@ -40,7 +41,7 @@ function countDown() {
       gameMessage.innerText = "Enjoy the game!";
       gameIsActive = true;
     }
-  }, 500);
+  }, 100);
 }
 
 function renderSnakeHead() {
@@ -64,10 +65,14 @@ function RandomCoordinate(min = 2, max = 20) {
 function generateFruits() {
   fruitPosition = { x: RandomCoordinate(), y: RandomCoordinate() };
 
-  while (snakePosition.some((i) => i.x === fruitPosition.x && i.y === fruitPosition.y)) {
+  while (
+    snakePosition.some(
+      (i) => i.x === fruitPosition.x && i.y === fruitPosition.y
+    )
+  ) {
     fruitPosition = { x: RandomCoordinate(), y: RandomCoordinate() };
-  };
-  
+  }
+
   const fruitElement = document.createElement("div");
   fruitElement.classList.add("fruit");
   fruitElement.style.gridColumnStart = fruitPosition.x;
@@ -104,7 +109,7 @@ function moveSnake() {
 
 function movementInterval() {
   clearInterval(directionInterval);
-  directionInterval = setInterval(moveSnake, 100);
+  directionInterval = setInterval(moveSnake, 200);
 }
 
 function eatFruit() {
@@ -171,11 +176,13 @@ function growBody() {
 }
 
 function checkLoseConditions() {
+    checkBodyCollision();
   if (
     snakePosition[0].x === 0 ||
     snakePosition[0].y === 0 ||
     snakePosition[0].x === 21 ||
-    snakePosition[0].y === 21
+    snakePosition[0].y === 21 ||
+    ifCollideBody 
   ) {
     gameMessage.innerText = `You Lose`;
     // unrenderSnakeTail();
@@ -183,6 +190,19 @@ function checkLoseConditions() {
     showRestartButton();
     clearInterval(directionInterval);
   }
+}
+
+// if the head of snake comes into contact with any coordinates of the body
+
+function checkBodyCollision() {
+  let head = {x:snakePosition[0].x, y:snakePosition[0].y};
+
+  for (i = 1; i < snakePosition.length; i++) {
+    if (ifCollideBody = (head.x === snakePosition[i].x && head.y === snakePosition[i].y)){
+        return;
+    };
+  }
+
 }
 
 function showRestartButton() {

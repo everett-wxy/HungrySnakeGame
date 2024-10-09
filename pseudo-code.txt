@@ -41,5 +41,17 @@
     // display score
     // show reset button
 
+// collide with body
+
+let head = snake[0].x & snake[0].y 
+snake.length = 5 
+
+for (i = 1; i< snake.length; i++) {
+    ifCollideBody = (head.x === snake[i].x && head.x === snake[i].y);
+    return ifCollideBody;
+}
+
+if (ifCollideBody) 
+
 // Reset game
     // restart game state 
