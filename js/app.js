@@ -6,7 +6,7 @@ const gridSize = gridHeight * gridWidth;
 /*---------- Variables (state) ---------*/
 
 let gameIsActive = "";
-let snakePosition = [{ x: 10, y: 10 }];
+let snakePosition = [{ x: undefined, y: undefined }];
 let fruitPosition = {};
 let directionInterval;
 let snakeDirection;
@@ -21,19 +21,10 @@ const gameMessage = document.getElementById("game-message");
 
 /*-------------- Functions -------------*/
 
-//create grid cells
-
-/*
-    for (let i = 0; i < gridSize; i++){
-        const gridCell= document.createElement('div');
-        gridCell.classList.add('grid-cell');
-        gameBoard.appendChild(gridCell);
-    };
-    */
-
 function startGame() {
+  snakePosition[0] = { x: 10, y: 10 };
   countDown();
-  renderSnake();
+  renderSnakeHead();
   generateFruits();
 }
 
@@ -52,7 +43,7 @@ function countDown() {
   }, 500);
 }
 
-function renderSnake() {
+function renderSnakeHead() {
   const snakeBody = document.createElement("div"); // creating new div element
   snakeBody.classList.add("snake-body"); // adding class to div element
   snakeBody.style.gridColumnStart = snakePosition[0].x; // adding grid column css value
@@ -60,7 +51,7 @@ function renderSnake() {
   gameBoard.insertBefore(snakeBody, gameBoard.firstChild); // add html element at the beginning of gameBoard
 }
 
-function unrenderSnake() {
+function unrenderSnakeTail() {
   const snakeBody = document.querySelectorAll(".snake-body");
   const lastSnakeElement = snakeBody[snakeBody.length - 1];
   gameBoard.removeChild(lastSnakeElement); // remove the last element of gameBoar with .snake-body class
@@ -71,8 +62,7 @@ function RandomCoordinate(min = 2, max = 20) {
 }
 
 function generateFruits() {
-  fruitPosition.x = RandomCoordinate();
-  fruitPosition.y = RandomCoordinate();
+  fruitPosition = { x: RandomCoordinate(), y: RandomCoordinate() };
   const fruitElement = document.createElement("div");
   fruitElement.classList.add("fruit");
   fruitElement.style.gridColumnStart = fruitPosition.x;
@@ -97,10 +87,10 @@ function moveSnake() {
         movingSnake = { x: snakePosition[0].x - 1, y: snakePosition[0].y };
         break;
     }
-    snakePosition.unshift(movingSnake); // add element (updated coordinates) to start of array 'snakePosition'
-    snakePosition.pop(); //remove last element (old coordinates) of array 'snakePosition'
-    unrenderSnake(); // remove html element of last added html
-    renderSnake(); // creating html element of new added array element
+    snakePosition.unshift(movingSnake); // add updated coordinates  to start of array 'snakePosition'
+    snakePosition.pop(); //remove last coordinates of array 'snakePosition'
+    unrenderSnakeTail(); // remove html element of snake tail
+    renderSnakeHead(); // creating html element of snake head
     eatFruit();
     checkLoseConditions();
     movementInterval();
@@ -109,7 +99,7 @@ function moveSnake() {
 
 function movementInterval() {
   clearInterval(directionInterval);
-  directionInterval = setInterval(moveSnake, 100);
+  directionInterval = setInterval(moveSnake, 500);
 }
 
 function eatFruit() {
@@ -169,7 +159,7 @@ function checkLoseConditions() {
     snakePosition[0].y === 21
   ) {
     gameMessage.innerText = `You Lose`;
-    unrenderSnake();
+    unrenderSnakeTail();
     gameIsActive = false;
     showRestartButton();
   }
