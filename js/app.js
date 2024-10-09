@@ -99,7 +99,7 @@ function moveSnake() {
 
 function movementInterval() {
   clearInterval(directionInterval);
-  directionInterval = setInterval(moveSnake, 500);
+  directionInterval = setInterval(moveSnake, 100);
 }
 
 function eatFruit() {
@@ -117,31 +117,45 @@ function eatFruit() {
 function growBody() {
   let newBodyCoordinates;
   let snakeGrow;
-  switch (snakeDirection) {
-    case "up":
-      newBodyCoordinates = {
-        x: snakePosition[snakePosition.length - 1].x,
-        y: snakePosition[snakePosition.length - 1].y + 1,
-      };
-      break;
-    case "down":
-      newBodyCoordinates = {
-        x: snakePosition[snakePosition.length - 1].x,
-        y: snakePosition[snakePosition.length - 1].y - 1,
-      };
-      break;
-    case "left":
-      newBodyCoordinates = {
-        x: snakePosition[snakePosition.length - 1].x - 1,
-        y: snakePosition[snakePosition.length - 1].y,
-      };
-      break;
-    case "right":
-      newBodyCoordinates = {
-        x: snakePosition[snakePosition.length - 1].x + 1,
-        y: snakePosition[snakePosition.length - 1].y,
-      };
-      break;
+  // error is thrown because length of snake at the beginning is less than 2
+  if (snakePosition.length < 2) {
+    switch (snakeDirection) {
+      case "up":
+        newBodyCoordinates = {
+          x: snakePosition[snakePosition.length - 1].x,
+          y: snakePosition[snakePosition.length - 1].y + 1,
+        };
+        break;
+      case "down":
+        newBodyCoordinates = {
+          x: snakePosition[snakePosition.length - 1].x,
+          y: snakePosition[snakePosition.length - 1].y - 1,
+        };
+        break;
+      case "left":
+        newBodyCoordinates = {
+          x: snakePosition[snakePosition.length - 1].x - 1,
+          y: snakePosition[snakePosition.length - 1].y,
+        };
+        break;
+      case "right":
+        newBodyCoordinates = {
+          x: snakePosition[snakePosition.length - 1].x + 1,
+          y: snakePosition[snakePosition.length - 1].y,
+        };
+        break;
+    }
+  } else {
+    newBodyCoordinates = {
+      x:
+        snakePosition[snakePosition.length - 1].x +
+        (snakePosition[snakePosition.length - 1].x -
+          snakePosition[snakePosition.length - 2].x),
+      y:
+        snakePosition[snakePosition.length - 1].y +
+        (snakePosition[snakePosition.length - 1].y -
+          snakePosition[snakePosition.length - 2].y),
+    };
   }
   snakePosition.push(newBodyCoordinates);
   snakeGrow = document.createElement("div");
