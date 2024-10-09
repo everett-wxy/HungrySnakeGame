@@ -17,7 +17,6 @@ let score = 0;
 /*----- Cached Element References  -----*/
 
 const gameBoard = document.querySelector(".grid-container");
-const snake = document.querySelector(".snake");
 const startButton = document.getElementById("start-button");
 const restartButton = document.getElementById("restart-button");
 const gameMessage = document.getElementById("game-message");
@@ -197,7 +196,6 @@ function checkLoseConditions() {
     ifCollideBody
   ) {
     gameMessage.innerText = `You Lose`;
-    // unrenderSnakeTail();
     gameIsActive = false;
     showRestartButton();
     clearInterval(directionInterval);
@@ -232,6 +230,7 @@ function restartGame() {
   gameMessage.innerText = `Press Start to Play`;
   startButton.style.display = "block";
   restartButton.style.display = "none";
+  score = 0; 
 }
 /*----------- Event Listeners ----------*/
 

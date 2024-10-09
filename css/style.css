@@ -1,9 +1,32 @@
 html, body {
-    height: 100%;
+    height: 100vh;
     margin: 0;
     display: flex;
     justify-content: center;
     align-items: center;
+    font-family: "VT323", monospace;
+}
+
+html {
+    background-color: rgb(151, 151, 151);
+}
+
+.gameborder-1{
+    border: grey solid 10px;
+    border-radius: 30px;
+    box-shadow: inset 0 0 0 10px grey;
+}
+
+.gameborder-2{
+    border: rgb(254, 122, 122) solid 8px;
+    border-radius: 26px;
+    box-shadow: inset 0 0 0 10px rgb(254, 122, 122);
+}
+
+.gameborder-3{
+    border: rgb(95, 85, 0) solid 30px;
+    border-radius: 20px;
+    box-shadow: inset 0 0 0 10px rgb(95, 85, 0);
 }
 
 .grid-container {
@@ -11,9 +34,11 @@ html, body {
   grid-template-columns: repeat(20, 20px); /* 20 columns of 20px */
   grid-template-rows: repeat(20, 20px);
   gap: 0;
-  border: 1px solid black;
+  /* border: 1px solid black; */
+  margin: 10px;
   width: 400px;
   height: 400px;
+  background-color: #babcb3;
 }
 
 .grid-cell {
@@ -24,10 +49,10 @@ html, body {
 .snake-body {
   width: 20px;
   height: 20px;
-  background-color: grey;
-  border: 1px solid #ccc;
-  grid-column: 10;
-  grid-row: 10;
+  background-color: #5a5a5a;
+  border: 1px dotted #5a5a5a;
+  /* grid-column: 10;
+  grid-row: 10; */
 }
 
 #restart-button {
@@ -38,5 +63,5 @@ html, body {
 .fruit {
     width: 20px;
     height: 20px;
-    background-color: aqua;
+    background-color: whitesmoke;
 }
