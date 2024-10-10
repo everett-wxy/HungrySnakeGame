@@ -100,7 +100,7 @@ function generateFruits() {
 
 function generateRareFruit() {
   const randomNum = Math.random();
-  if (randomNum < 0.5) {
+  if (randomNum < 0.2) {
     spawnRareFruit = true;
   } else {
     spawnRareFruit = false;
@@ -154,14 +154,23 @@ function eatFruit() {
     updateScore();
     growBody();
     generateFruits();
-    
   }
 }
 
 function growBody() {
   let newBodyCoordinates;
   let snakeGrow;
-  if (snakePosition.length < 2) {
+  if (spawnRareFruit) {
+    let i = 0;
+    function growBodyWithDelay() {
+      if (i < 5) {
+        growBodyLoop();
+        i++;
+        setTimeout(growBodyWithDelay, 300);
+      }
+    }
+    growBodyWithDelay();
+  } else if (snakePosition.length < 2) {
     switch (snakeDirection) {
       case "up":
         newBodyCoordinates = {
@@ -188,6 +197,12 @@ function growBody() {
         };
         break;
     }
+    snakePosition.push(newBodyCoordinates);
+    snakeGrow = document.createElement("div");
+    snakeGrow.classList.add("snake-body");
+    snakeGrow.style.gridColumnStart = newBodyCoordinates.x;
+    snakeGrow.style.gridRowStart = newBodyCoordinates.y;
+    gameBoard.appendChild(snakeGrow);
   } else {
     newBodyCoordinates = {
       x:
@@ -199,13 +214,14 @@ function growBody() {
         (snakePosition[snakePosition.length - 1].y -
           snakePosition[snakePosition.length - 2].y),
     };
+    snakePosition.push(newBodyCoordinates);
+    snakeGrow = document.createElement("div");
+    snakeGrow.classList.add("snake-body");
+    snakeGrow.style.gridColumnStart = newBodyCoordinates.x;
+    snakeGrow.style.gridRowStart = newBodyCoordinates.y;
+    gameBoard.appendChild(snakeGrow);
   }
-  snakePosition.push(newBodyCoordinates);
-  snakeGrow = document.createElement("div");
-  snakeGrow.classList.add("snake-body");
-  snakeGrow.style.gridColumnStart = newBodyCoordinates.x;
-  snakeGrow.style.gridRowStart = newBodyCoordinates.y;
-  gameBoard.appendChild(snakeGrow);
+
   speed *= 0.95;
 }
 
@@ -272,6 +288,54 @@ function updateHighScore() {
     highscoreEl.innerText = highscore;
     highscoreMessage.style.display = "block";
   }
+}
+
+function growBodyLoop() {
+  if (snakePosition.length < 2) {
+    switch (snakeDirection) {
+      case "up":
+        newBodyCoordinates = {
+          x: snakePosition[snakePosition.length - 1].x,
+          y: snakePosition[snakePosition.length - 1].y + 1,
+        };
+        break;
+      case "down":
+        newBodyCoordinates = {
+          x: snakePosition[snakePosition.length - 1].x,
+          y: snakePosition[snakePosition.length - 1].y - 1,
+        };
+        break;
+      case "left":
+        newBodyCoordinates = {
+          x: snakePosition[snakePosition.length - 1].x - 1,
+          y: snakePosition[snakePosition.length - 1].y,
+        };
+        break;
+      case "right":
+        newBodyCoordinates = {
+          x: snakePosition[snakePosition.length - 1].x + 1,
+          y: snakePosition[snakePosition.length - 1].y,
+        };
+        break;
+    }
+  } else {
+    newBodyCoordinates = {
+      x:
+        snakePosition[snakePosition.length - 1].x +
+        (snakePosition[snakePosition.length - 1].x -
+          snakePosition[snakePosition.length - 2].x),
+      y:
+        snakePosition[snakePosition.length - 1].y +
+        (snakePosition[snakePosition.length - 1].y -
+          snakePosition[snakePosition.length - 2].y),
+    };
+  }
+  snakePosition.push(newBodyCoordinates);
+  snakeGrow = document.createElement("div");
+  snakeGrow.classList.add("snake-body");
+  snakeGrow.style.gridColumnStart = newBodyCoordinates.x;
+  snakeGrow.style.gridRowStart = newBodyCoordinates.y;
+  gameBoard.appendChild(snakeGrow);
 }
 
 /*----------- Event Listeners ----------*/

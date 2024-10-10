@@ -94,12 +94,19 @@ body::after {
 .fruit {
   width: 20px;
   height: 20px;
-  background-color: #2b5c5a;
+  background-image: url(/apple.png);
+  background-size: cover;
+  background-position: center;
+  /* background-color: #2b5c5a; */
 }
+
 .special-fruit {
-  width: 20px;
-  height: 20px;
-  background-color: #d6b707;
+  width: 25px;
+  height: 25px;
+  background-image: url(/basket.png);
+  background-size: cover;
+
+  /* background-color: #d6b707; */
 }
 
 .starting-screen {
