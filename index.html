@@ -9,30 +9,39 @@
       href="https://fonts.googleapis.com/css2?family=VT323&display=swap"
       rel="stylesheet"
     />
-    <title>Hungry Snake Chase</title>
+    <title>Jiak Zhua</title>
     <link rel="stylesheet" href="./css/style.css" />
     <script defer src="./js/app.js"></script>
   </head>
 
   <body>
-    <div>
-      <div class="header">
-        <h1>Hungry Snake Game</h1>
-        <h2 id="game-message">Press Start to Play</h2>
-        <h3 class="score">Score: <span id="score"></span></h3>
-      </div>
-      <div class="gameborder-1">
-        <div class="gameborder-2">
-          <div class="gameborder-3">
-            <div class="grid-container"></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="buttons">
-        <button id="start-button">Start</button>
-        <button id="restart-button">Restart</button>
+    <div class="header">
+      <h1 id="game-message">Beat the high score!</h1>
+      <div class="score-parent">
+        <h2 class="score">Score: <span id="score"></span></h2>
+        <h2 class="high-score">High Score: <span id="high-score"></span></h2>
       </div>
     </div>
+
+    <div class="game-border-1">
+      <div class="game-border-2">
+        <div class="game-border-3">
+          <div class="grid-container"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="starting-screen">
+      <img id="game-logo" src="Cool-snake.png" />
+      <h1 id="title">Jiak Zhua</h1>
+      <h3 id="instructions">Press start to start the game</h3>
+      <button id="start-button">Start</button>
+      <button id="restart-button">Restart</button>
+    </div>
+    <p>
+      Use the arrow keys to move the snake and eat the fruits to grow longer.
+      Avoid hitting the walls or your own tail, or the game will end. The more
+      fruits you eat, the higher your score.
+    </p>
   </body>
 </html>

@@ -1,7 +1,4 @@
 /*-------------- Constants -------------*/
-const gridHeight = 20;
-const gridWidth = 20;
-const gridSize = gridHeight * gridWidth;
 
 /*---------- Variables (state) ---------*/
 
@@ -13,6 +10,8 @@ let snakeDirection;
 let ifCollideBody = false;
 let speed = 100;
 let score = 0;
+let highscore = 0;
+let spawnRareFruit = false;
 
 /*----- Cached Element References  -----*/
 
@@ -21,6 +20,11 @@ const startButton = document.getElementById("start-button");
 const restartButton = document.getElementById("restart-button");
 const gameMessage = document.getElementById("game-message");
 const scoreEl = document.getElementById("score");
+const gameLogo = document.getElementById("game-logo");
+const gameTitle = document.getElementById("title");
+const instruction = document.getElementById("instructions");
+const highscoreEl = document.getElementById("high-score");
+const highscoreMessage = document.querySelector(".high-score");
 
 /*-------------- Functions -------------*/
 
@@ -32,6 +36,10 @@ function startGame() {
   snakeDirection = "up";
   movementInterval();
   score = 0;
+  gameLogo.style.visibility = "hidden";
+  gameTitle.style.visibility = "hidden";
+  instruction.style.visibility = "hidden";
+  startButton.style.display = "none";
 }
 
 function countDown() {
@@ -54,6 +62,9 @@ function renderSnakeHead() {
   snakeBody.classList.add("snake-body"); // adding class to div element
   snakeBody.style.gridColumnStart = snakePosition[0].x; // adding grid column css value
   snakeBody.style.gridRowStart = snakePosition[0].y;
+  if (snakePosition[0].x === 0 || snakePosition[0].y === 0) {
+    return;
+  }
   gameBoard.insertBefore(snakeBody, gameBoard.firstChild); // add html element at the beginning of gameBoard
 }
 
@@ -77,14 +88,24 @@ function generateFruits() {
   ) {
     fruitPosition = { x: RandomCoordinate(), y: RandomCoordinate() };
   }
-
+  generateRareFruit();
   const fruitElement = document.createElement("div");
-  fruitElement.classList.add("fruit");
+  if (spawnRareFruit) {
+    fruitElement.classList.add("special-fruit");
+  } else fruitElement.classList.add("fruit");
   fruitElement.style.gridColumnStart = fruitPosition.x;
   fruitElement.style.gridRowStart = fruitPosition.y;
   gameBoard.appendChild(fruitElement);
 }
 
+function generateRareFruit() {
+  const randomNum = Math.random();
+  if (randomNum < 0.5) {
+    spawnRareFruit = true;
+  } else {
+    spawnRareFruit = false;
+  }
+}
 function moveSnake() {
   let movingSnake;
   if (gameIsActive) {
@@ -105,9 +126,9 @@ function moveSnake() {
     snakePosition.unshift(movingSnake); // add updated coordinates  to start of array 'snakePosition'
     snakePosition.pop(); //remove last coordinates of array 'snakePosition'
     unrenderSnakeTail(); // remove html element of snake tail
+    checkLoseConditions();
     renderSnakeHead(); // creating html element of snake head
     eatFruit();
-    checkLoseConditions();
     movementInterval();
   }
 }
@@ -122,19 +143,24 @@ function eatFruit() {
     fruitPosition.x === snakePosition[0].x &&
     fruitPosition.y === snakePosition[0].y
   ) {
-    const fruitElement = document.querySelector(".fruit");
+    let fruitElement;
+    if (spawnRareFruit) {
+      fruitElement = document.querySelector(".special-fruit");
+    } else fruitElement = document.querySelector(".fruit");
     fruitElement.remove();
-    generateFruits();
-    growBody();
-    score++;
+    if (spawnRareFruit) {
+      score += 5;
+    } else score++;
     updateScore();
+    growBody();
+    generateFruits();
+    
   }
 }
 
 function growBody() {
   let newBodyCoordinates;
   let snakeGrow;
-  // error is thrown because length of snake at the beginning is less than 2
   if (snakePosition.length < 2) {
     switch (snakeDirection) {
       case "up":
@@ -180,6 +206,7 @@ function growBody() {
   snakeGrow.style.gridColumnStart = newBodyCoordinates.x;
   snakeGrow.style.gridRowStart = newBodyCoordinates.y;
   gameBoard.appendChild(snakeGrow);
+  speed *= 0.95;
 }
 
 function updateScore() {
@@ -227,11 +254,26 @@ function restartGame() {
   snakePosition = [{ x: 10, y: 10 }];
   snakeDirection = "up";
   ifCollideBody = false;
-  gameMessage.innerText = `Press Start to Play`;
+  gameMessage.innerText = `Play again and beat your high score`;
   startButton.style.display = "block";
   restartButton.style.display = "none";
-  score = 0; 
+  gameLogo.style.visibility = "visible";
+  gameTitle.style.visibility = "visible";
+  instruction.style.visibility = "visible";
+  updateHighScore();
+  score = 0;
+  speed = 100;
+  updateScore();
 }
+
+function updateHighScore() {
+  if (score > highscore) {
+    highscore = score;
+    highscoreEl.innerText = highscore;
+    highscoreMessage.style.display = "block";
+  }
+}
+
 /*----------- Event Listeners ----------*/
 
 startButton.addEventListener("click", startGame);
