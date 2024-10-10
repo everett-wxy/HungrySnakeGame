@@ -86,9 +86,6 @@ body::after {
   width: 20px;
   height: 20px;
   background-color: #6be6e1;
-  /* border: 1px dotted #5a5a5a; */
-  /* grid-column: 10;
-  grid-row: 10; */
 }
 
 .fruit {
