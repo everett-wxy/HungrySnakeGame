@@ -8,7 +8,7 @@ let fruitPosition = {};
 let directionInterval;
 let snakeDirection;
 let ifCollideBody = false;
-let speed = 100;
+let speed = 150;
 let score = 0;
 let highscore = 0;
 let spawnRareFruit = false;
@@ -100,7 +100,7 @@ function generateFruits() {
 
 function generateRareFruit() {
   const randomNum = Math.random();
-  if (randomNum < 0.2) {
+  if (randomNum < 0.1) {
     spawnRareFruit = true;
   } else {
     spawnRareFruit = false;
@@ -222,7 +222,7 @@ function growBody() {
     gameBoard.appendChild(snakeGrow);
   }
 
-  speed *= 0.95;
+  speed *= 0.9;
 }
 
 function updateScore() {
