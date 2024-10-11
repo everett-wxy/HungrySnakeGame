@@ -29,7 +29,7 @@ const highscoreMessage = document.querySelector(".high-score");
 /*-------------- Functions -------------*/
 
 function startGame() {
-  snakePosition[0] = { x: 10, y: 10 };
+  snakePosition[0] = { x: 5, y: 5 };
   countDown();
   renderSnakeHead();
   generateFruits();
