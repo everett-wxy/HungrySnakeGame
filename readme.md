@@ -1,6 +1,7 @@
 # Jiak Zhua
 
 ![Screenshot of app](/images/screenshot-Jiak-Zhua.png)
+Play it here: https://everett-wxy.github.io/jiak-zhua/
 
 A simple browser-based Snake game built with HTML, CSS, and JavaScript.
 
